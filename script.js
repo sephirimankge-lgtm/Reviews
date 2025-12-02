@@ -46,11 +46,6 @@ document.addEventListener('DOMContentLoaded', function() {
     reviewForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
-        if (rating === "0") {
-            e.preventDefault();
-            alert("Please select a star rating before submitting.");
-            return;
-        }
         
         // Get form data
         const formData = {
@@ -77,4 +72,5 @@ document.addEventListener('DOMContentLoaded', function() {
     closeModal.addEventListener('click', function() {
         successModal.classList.add('hidden');
     });
+
 });
