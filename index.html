@@ -21,7 +21,7 @@
 
             <!-- Rating Form -->
             <div class="px-6 py-8">
-                <form id="reviewForm" class="space-y-6" action="https://script.google.com/macros/s/AKfycby5qDtPqITN0EO-USloIXMuuIyqu19zCfgKsbi1IbQjUXj6xa0Qn2XaTlsFsiCWPllC/exec" method="POST">
+                <form id="reviewForm" class="space-y-6">
                     <!-- Rating Stars -->
                     <div class="space-y-2">
                         <label class="block text-gray-700 font-medium">Overall Rating</label>
@@ -71,7 +71,7 @@
     </div>
 
 <script>
-document.getElementById("reviewForm").addEventListener("submit", function(e) {
+/*document.getElementById("reviewForm").addEventListener("submit", function(e) {
     e.preventDefault(); // prevent normal POST form behavior
 
     const rating = document.getElementById("ratingValue").value;
@@ -108,7 +108,31 @@ document.getElementById("reviewForm").addEventListener("submit", function(e) {
         }
     })
     .catch(err => alert("Network error: " + err));
-});
+});*/
+</script>
+
+<script>
+    async function sendToGoogleSheets(formData) {
+    const scriptUrl = 'https://script.google.com/macros/s/AKfycbw5TN6WQAG5oSTnfejNYD8VSLGtVVEXQd2wKJ6KOKCTQTx1w46BppNsaOGkbjevs7jG/exec';
+    
+    try {
+        const response = await fetch(scriptUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        });
+        
+        if (!response.ok) throw new Error('Network response was not ok');
+        
+        return await response.json();
+    } catch (error) {
+        console.error('Error:', error);
+        throw error;
+    }
+}
+
 </script>
 
 
