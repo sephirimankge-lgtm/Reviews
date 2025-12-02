@@ -1,0 +1,28 @@
+/* Custom styles for the rating stars */
+.star.active {
+    color: #f59e0b !important;
+    fill: #f59e0b !important;
+}
+
+/* Animation for the success modal */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+#successModal {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Smooth transitions for interactive elements */
+button, .star {
+    transition: all 0.2s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}

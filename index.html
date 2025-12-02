@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rate & Rave - Share Your Feedback</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="container mx-auto px-4 py-12 max-w-2xl">
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <!-- Header -->
+            <div class="bg-indigo-600 px-6 py-8 text-center">
+                <i data-feather="star" class="w-12 h-12 text-white mx-auto"></i>
+                <h1 class="text-3xl font-bold text-white mt-4">Rate Your Experience</h1>
+                <p class="text-indigo-100 mt-2">We'd love to hear your feedback!</p>
+            </div>
+
+            <!-- Rating Form -->
+            <div class="px-6 py-8">
+                <form id="reviewForm" class="space-y-6" action="https://script.google.com/macros/s/AKfycby5qDtPqITN0EO-USloIXMuuIyqu19zCfgKsbi1IbQjUXj6xa0Qn2XaTlsFsiCWPllC/exec" method="POST">
+                    <!-- Rating Stars -->
+                    <div class="space-y-2">
+                        <label class="block text-gray-700 font-medium">Overall Rating</label>
+                        <div class="flex justify-center space-x-2" id="starRating">
+                            <i data-feather="star" class="star w-8 h-8 text-gray-300 cursor-pointer hover:text-yellow-400" data-rating="1"></i>
+                            <i data-feather="star" class="star w-8 h-8 text-gray-300 cursor-pointer hover:text-yellow-400" data-rating="2"></i>
+                            <i data-feather="star" class="star w-8 h-8 text-gray-300 cursor-pointer hover:text-yellow-400" data-rating="3"></i>
+                            <i data-feather="star" class="star w-8 h-8 text-gray-300 cursor-pointer hover:text-yellow-400" data-rating="4"></i>
+                            <i data-feather="star" class="star w-8 h-8 text-gray-300 cursor-pointer hover:text-yellow-400" data-rating="5"></i>
+                        </div>
+                        <input type="hidden" id="ratingValue" name="rating" value="0">
+                    </div>
+
+                    <!-- Review Text -->
+                    <div>
+                        <label for="review" class="block text-gray-700 font-medium">Your Review</label>
+                        <textarea id="review" name="review" rows="4" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Tell us about your experience..."></textarea>
+                    </div>
+
+                    <!-- Email (Optional) -->
+                    <div>
+                        <label for="email" class="block text-gray-700 font-medium">Email (Optional)</label>
+                        <input type="email" id="email" name="email" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-indigo-500 focus:border-indigo-500" placeholder="your@email.com">
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="pt-4">
+                        <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
+                            Submit Review
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Success Modal (hidden by default) -->
+        <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+            <div class="bg-white rounded-xl p-8 max-w-sm mx-4 text-center">
+                <i data-feather="check-circle" class="w-16 h-16 text-green-500 mx-auto"></i>
+                <h2 class="text-2xl font-bold mt-4">Thank You!</h2>
+                <p class="text-gray-600 mt-2">Your review has been submitted successfully.</p>
+                <button id="closeModal" class="mt-6 bg-indigo-600 text-white font-medium py-2 px-6 rounded-md hover:bg-indigo-700">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+<script>
+document.getElementById("reviewForm").addEventListener("submit", function(e) {
+    e.preventDefault(); // prevent normal POST form behavior
+
+    const rating = document.getElementById("ratingValue").value;
+    const review = document.getElementById("review").value;
+    const email = document.getElementById("email").value;
+
+    // validation
+    if (rating === "0") {
+        alert("Please select a star rating before submitting.");
+        return;
+    }
+
+    // build data object
+    const formData = {
+        rating: rating,
+        review: review,
+        email: email
+    };
+
+    fetch(this.action, {
+        method: "POST",
+        body: JSON.stringify(formData),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    .then(res => res.json())
+    .then(response => {
+        if (response.success) {
+            alert("Thank you! Your review has been submitted.");
+            document.getElementById("reviewForm").reset();
+        } else {
+            alert("Error: " + response.error);
+        }
+    })
+    .catch(err => alert("Network error: " + err));
+});
+</script>
+
+
+    <script src="script.js"></script>
+    <script>
+        feather.replace();
+    </script>
+</body>
+</html>
