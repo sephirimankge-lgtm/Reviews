@@ -70,7 +70,16 @@
         </div>
     </div>
 
-<script>
+
+
+
+
+
+    <script src="script.js"></script>
+    <script>
+        feather.replace();
+    </script>
+    <script>
 /*document.getElementById("reviewForm").addEventListener("submit", function(e) {
     e.preventDefault(); // prevent normal POST form behavior
 
@@ -110,38 +119,5 @@
     .catch(err => alert("Network error: " + err));
 });*/
 </script>
-
-<script>
-    async function sendToGoogleSheets(formData) {
-    const scriptUrl = 'https://script.google.com/macros/s/AKfycbxHz0ii2SV3pJbn0Yly00ZvkYJvOfY_HWhQJ_xFwqAnlqZRcyhe6dDhUSYugyOtmZU6/exec';
-    
-    try {
-        const response = await fetch(scriptUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData)
-        });
-        
-        if (!response.ok) throw new Error('Network response was not ok');
-        
-        return await response.json();
-    } catch (error) {
-        console.error('Error:', error);
-        throw error;
-    }
-}
-
-</script>
-
-
-    <script src="script.js"></script>
-    <script>
-        feather.replace();
-    </script>
 </body>
-
 </html>
-
-
